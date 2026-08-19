@@ -1,0 +1,59 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc", "import"],
+  "env": {
+    "builtin": true
+  },
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn",
+    "pedantic": "warn",
+    "style": "warn",
+    "perf": "warn"
+  },
+  "rules": {
+    "complexity": ["warn", { "max": 10 }],
+    "max-depth": ["warn", { "max": 1 }],
+    "max-lines": ["warn", { "max": 300 }],
+    "max-lines-per-function": ["warn", { "max": 50, "skipBlankLines": true, "skipComments": true }]
+  },
+  "ignorePatterns": [
+    "**/dist/**",
+    "**/build/**",
+    "**/coverage/**",
+    "**/node_modules/**",
+    "**/*.sqlite"
+  ],
+  "overrides": [
+    {
+      "files": ["*.mjs"],
+      "rules": {
+        "import/no-anonymous-default-export": "off",
+        "eslint/sort-keys": "off"
+      }
+    },
+    {
+      "files": ["scripts/**/*.ts"],
+      "rules": {
+        "max-lines-per-function": "off",
+        "max-depth": "off",
+        "import/no-nodejs-modules": "off"
+      }
+    },
+    {
+      "files": ["**/*.{test,spec}.{ts,tsx,js,jsx}", "**/tests/**"],
+      "env": {
+        "bun": true
+      },
+      "rules": {
+        "max-lines-per-function": [
+          "warn",
+          { "max": 100, "skipBlankLines": true, "skipComments": true }
+        ],
+        "import/no-nodejs-modules": "off",
+        "eslint/id-length": "off",
+        "eslint/no-magic-numbers": "off"
+      }
+    }
+  ]
+}

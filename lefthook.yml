@@ -1,0 +1,12 @@
+# Lefthook — staged-only. Same tools as CI.
+
+pre-commit:
+  parallel: false
+  commands:
+    lint-staged:
+      run: bunx lint-staged
+
+commit-msg:
+  commands:
+    commitlint:
+      run: bunx commitlint --edit {1}

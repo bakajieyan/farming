@@ -1,0 +1,18 @@
+node_modules/
+coverage/
+dist/
+.DS_Store
+*.log
+.env
+.env.*
+!.env.example
+
+# SQLite sidecars (commit adventure.sqlite; not WAL)
+*.sqlite-wal
+*.sqlite-shm
+*.db-wal
+*.db-shm
+
+# Lefthook / OS
+.lefthook-local.yml
+Thumbs.db

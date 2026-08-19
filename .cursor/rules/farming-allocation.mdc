@@ -1,0 +1,15 @@
+---
+description: Phase-1 and mature sleeve percentages for the farming adventure (core / LP / alpha).
+globs: farming/**,adventure/**,scripts/**,db/**,AGENTS.md,README.md,PIPELINES.md,.cursor/**
+alwaysApply: false
+---
+
+# Farming allocation
+
+**Phase 1 (active):** start 60% core / 25% LP / 15% alpha. Monthly $200 → $120 / $50 / $30.
+
+**~$100k+ book:** 60% core / 30% yield / 10% alpha. Sleeve APY aims 3–7% / 7–15% / 15%+ (lossy). Portfolio target **10–15%**.
+
+Rebalance when a sleeve is **≥5pp** off target, or a hard-no fires. Split new cash with the phase monthly recipe, not the loudest APY.
+
+Memecoin engine is outside these percentages.

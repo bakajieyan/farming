@@ -1,0 +1,17 @@
+---
+description: Core invariants of the DeFi farming adventure (capital math, compound, two engines, Solana-first).
+globs: farming/**,adventure/**,scripts/**,db/**,AGENTS.md,README.md,PIPELINES.md,.cursor/**
+alwaysApply: false
+---
+
+# Farming invariants
+
+- Target: **$100 USDT/day** = **$36,500/year**. Design mature book around **10–15% net**, not 30–50% forever. Magic size at 12%: **~$300k**.
+- Phase 1 ($1k → $5k): **learn**, no leverage, yield **compounds** (not spent).
+- **Solana primary**; one cheap EVM secondary; no five-chain hops for ~2%.
+- Stables: **USDC + USDT**, USDC larger in core. Stablecoin ≠ risk-free.
+- **Two engines:** DeFi treasury vs memecoin/alpha — never merge totals in STATE.
+- Protocol cap: **30–40%** of DeFi treasury in one protocol as size grows.
+- Do not blindly deploy: a sourced `/deploy` plan before first dollars.
+- Pendle when used: **PT over YT**.
+- Split **base APY** vs **reward APY**. Rewards are not USDT until sold (and selling is a human action).

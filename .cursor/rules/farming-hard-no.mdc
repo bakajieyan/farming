@@ -1,0 +1,21 @@
+---
+description: Hard-no list for farming venues and tactics (headline APY, leverage, unaudited, reward-as-cash).
+globs: farming/**,adventure/**,scripts/**,db/**,AGENTS.md,README.md,PIPELINES.md,.cursor/**
+alwaysApply: false
+---
+
+# Farming hard-no
+
+Do **not** build the $100/day plan on:
+
+- 1,000%+ (or tiny-TVL "50,000%") headline APY
+- Unknown protocols or unaudited contracts as Core
+- Brand-new farms as Core
+- Leverage loops / recursive supply-borrow in Phase 1
+- Borrowing against volatile collateral
+- Treating reward tokens as USDT income
+- Chasing APY every few hours
+- Merging Pump.fun / memecoin capital into the DeFi treasury
+- Agent-sent transactions or key handling
+
+Fail closed: if unsure, **WATCH** in Alpha or **FAIL**. Log the verdict with `/update`.

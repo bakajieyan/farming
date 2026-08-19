@@ -1,0 +1,14 @@
+---
+description: Farming pack is documentation only — log the adventure, never trade or handle keys.
+globs: farming/**,adventure/**,scripts/**,db/**,AGENTS.md,README.md,PIPELINES.md,.cursor/**
+alwaysApply: false
+---
+
+# Farming docs-only
+
+- Do not execute on-chain actions, build trading bots, or ask for seeds/keys/passwords.
+- **Canonical store:** `db/adventure.sqlite` (Bun). Markdown under `adventure/` is the readable chronicle.
+- Every material change goes through `/update` (SQLite + CHANGELOG always; STATE if numbers moved; DECISIONS if a choice).
+- Do not park new open questions if a policy decision (or "pick IDs at /deploy") will close them.
+- Live APY/TVL need **source + date**. Unsourced numbers stay labeled unverified.
+- This pack is a personal adventure log, not financial advice and not a promise of $100/day.
