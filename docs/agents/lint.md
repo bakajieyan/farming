@@ -24,5 +24,5 @@ Primary JS/TS lint is **Oxlint**. Primary format is **Prettier** (requested; Oxf
 
 - Correctness **error**; suspicious / pedantic / style / perf **warn**.
 - Size ceilings (warn): nesting **1**, cyclomatic **10**, fn lines **50**, file **300**.
-- Pre-commit: `oxlint --fix` then Prettier on staged paths (same bar as CI). Treat **warn as error** on new agent-written code.
+- Pre-commit / CI: `oxlint --deny-warnings` then Prettier. Warnings fail the gate.
 - Never whole-repo format as a drive-by. Order: lint fix → format → verify.

@@ -24,8 +24,8 @@
   "scripts": {
     "prepare": "lefthook install",
     "db:init": "bun scripts/db-init.ts",
-    "lint": "oxlint .",
-    "lint:fix": "oxlint --fix .",
+    "lint": "oxlint --deny-warnings .",
+    "lint:fix": "oxlint --fix --deny-warnings .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",

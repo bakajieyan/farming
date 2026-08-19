@@ -18,7 +18,7 @@ Requires [Bun](https://bun.sh) **1.3.13** (`packageManager` in `package.json`).
 
 | Command                | What                                   |
 | ---------------------- | -------------------------------------- |
-| `bun run lint`         | Oxlint                                 |
+| `bun run lint`         | Oxlint (`--deny-warnings`)             |
 | `bun run format`       | Prettier write                         |
 | `bun run format:check` | Prettier check (CI)                    |
 | `bun run typecheck`    | `tsc --noEmit`                         |

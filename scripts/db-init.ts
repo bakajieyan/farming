@@ -1,14 +1,15 @@
 /**
- * Create / seed farming/db/adventure.sqlite (canonical store).
+ * Create / seed db/adventure.sqlite (canonical store).
  * Idempotent for questions + meta + state_kv. Changelog/decisions insert
  * the close-Q1–Q6 event only if missing.
  *
  *   bun scripts/db-init.ts
  */
-import { Database } from 'bun:sqlite'
 import { mkdirSync, readFileSync } from 'node:fs'
+import { Database } from 'bun:sqlite'
 import { join } from 'node:path'
 
+const none = ''
 const root = join(import.meta.dirname, '..')
 const dbDir = join(root, 'db')
 const dbPath = join(dbDir, 'adventure.sqlite')
@@ -19,28 +20,28 @@ mkdirSync(dbDir, { recursive: true })
 const db = new Database(dbPath, { create: true })
 db.exec(readFileSync(schemaPath, 'utf8'))
 
-function meta(key: string, value: string) {
+const meta = (key: string, value: string) => {
   db.run(
     'INSERT INTO meta(key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value',
     [key, value],
   )
 }
 
-function state(key: string, value: string) {
+const state = (key: string, value: string) => {
   db.run(
     'INSERT INTO state_kv(key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value',
     [key, value],
   )
 }
 
-function upsertQuestion(row: {
+const upsertQuestion = (row: {
+  blocking: number
+  closed_on: string
   id: string
   question: string
-  blocking: number
-  status: 'open' | 'closed'
   resolution: string
-  closed_on: string
-}) {
+  status: 'open' | 'closed'
+}) => {
   db.run(
     `INSERT INTO questions(id, question, blocking, status, resolution, closed_on)
      VALUES (?, ?, ?, ?, ?, ?)
@@ -121,8 +122,7 @@ upsertQuestion({
   closed_on: closedOn,
   id: 'Q6',
   question: 'Wallet / record-keeping method?',
-  resolution:
-    'Bun SQLite is canonical (farming/db/adventure.sqlite). Markdown is the readable chronicle.',
+  resolution: 'Bun SQLite is canonical (db/adventure.sqlite). Markdown is the readable chronicle.',
   status: 'closed',
 })
 
@@ -144,23 +144,23 @@ if (!existing) {
 }
 
 const q6Decision =
-  'Q6 closed: Bun SQLite (farming/db/adventure.sqlite) is the canonical operational record.'
+  'Q6 closed: Bun SQLite (db/adventure.sqlite) is the canonical operational record.'
 const q6Row = db.query('SELECT id FROM decisions WHERE decision = ?').get(q6Decision)
 if (!q6Row) {
-  const rows: [string, string, string, string | null, string][] = [
-    [closedOn, q6Decision, 'Human: "bun sqlite is canonical."', null, 'active'],
+  const rows: [string, string, string, string, string][] = [
+    [closedOn, q6Decision, 'Human: "bun sqlite is canonical."', none, 'active'],
     [
       closedOn,
       'Q5 closed: Stay at $200/month. Revisit at $5k or year-1.',
       'Do not budget a raise into the 3–5 year clock.',
-      null,
+      none,
       'active',
     ],
     [
       closedOn,
       'Q4 closed: Pump.fun / memecoin LP is optional and fully separate. Not committed.',
       'Two-engine rule.',
-      null,
+      none,
       'active',
     ],
     [
@@ -174,14 +174,14 @@ if (!q6Row) {
       closedOn,
       'Q2 closed: Phase-1 LP sleeve = Orca first, established USDC/USDT (or USDC-major). Pool ID at /deploy.',
       'Quality bar; Orca named for Solana stables.',
-      null,
+      none,
       'active',
     ],
     [
       closedOn,
       'Q1 closed: Phase-1 core = Kamino native USDC+USDT lending ($400 / $200). Market IDs at /deploy.',
       'Learn on boring markets; IDs go stale if parked.',
-      null,
+      none,
       'active',
     ],
   ]
@@ -193,9 +193,11 @@ if (!q6Row) {
   }
 }
 
-const open = db.query("SELECT count(*) AS n FROM questions WHERE status = 'open'").get() as {
-  n: number
+const openRow = db
+  .query("SELECT count(*) AS openCount FROM questions WHERE status = 'open'")
+  .get() as {
+  openCount: number
 }
 console.log(`adventure.sqlite ready at ${dbPath}`)
-console.log(`open questions: ${open.n}`)
+console.log(`open questions: ${openRow.openCount}`)
 db.close()
